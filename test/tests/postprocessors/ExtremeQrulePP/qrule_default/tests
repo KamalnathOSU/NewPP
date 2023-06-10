@@ -13,4 +13,10 @@
     exodiff = 'qrule_QUAD9_SECOND_out.e'
     requirement = 'The postprocessor shall calculate the Quadrature rule.'
   []
+  [QUAD_MIXED]
+	type = 'Exodiff'
+	input = 'qrule_mix.i'
+	exodiff = 'qrule_mix_out.e'
+    requirement = 'The postprocessor shall calculate the Quadrature rule.'
+  []
 []
