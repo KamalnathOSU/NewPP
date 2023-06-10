@@ -18,6 +18,10 @@ public:
   void threadJoin(const UserObject & y) override;
 
 protected:
+
+  /// _type of extremum to be calculated
+  MooseEnum _type;
+
   /// value held by postprocessor
   Real  _extreme_value;
 };
