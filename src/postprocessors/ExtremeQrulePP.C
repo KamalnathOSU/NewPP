@@ -1,11 +1,3 @@
-//* This file is part of the MOOSE framework
-//* https://www.mooseframework.org
-//*
-//* All rights reserved, see COPYRIGHT for full restrictions
-//* https://github.com/idaholab/moose/blob/master/COPYRIGHT
-//*
-//* Licensed under LGPL 2.1, please see LICENSE for details
-//* https://www.gnu.org/licenses/lgpl-2.1.html
 
 #include "ExtremeQrulePP.h"
 
@@ -14,21 +6,47 @@ registerMooseObject("NewppApp", ExtremeQrulePP);
 InputParameters
 ExtremeQrulePP::validParams()
 {
-  InputParameters params = GeneralPostprocessor::validParams();
+  InputParameters params = ElementPostprocessor::validParams();
   params.addParam<Real>("value", 0, "The value");
-  params.declareControllable("value");
 
   params.addClassDescription("Postprocessor that holds a constant value");
   return params;
 }
 
 ExtremeQrulePP::ExtremeQrulePP(const InputParameters & params)
-  : GeneralPostprocessor(params), _value(getParam<Real>("value"))
+  : ElementPostprocessor(params)
 {
+}
+
+void
+ExtremeQrulePP::initialize()
+{
+	_extreme_value = 0;
+}
+
+void
+ExtremeQrulePP::execute()
+{
+	if( _extreme_value < _qrule->n_points() )
+		_extreme_value = (double)_qrule->n_points() ;
+}
+
+void
+ExtremeQrulePP::finalize()
+{
+	gatherMax(_extreme_value);
+}
+
+void
+ExtremeQrulePP::threadJoin(const UserObject & y)
+{
+	const ExtremeQrulePP & pps = static_cast<const ExtremeQrulePP &>(y);
+	if(_extreme_value < pps._extreme_value)
+			_extreme_value = pps._extreme_value;
 }
 
 Real
 ExtremeQrulePP::getValue()
 {
-  return _value;
+  return _extreme_value;
 }
