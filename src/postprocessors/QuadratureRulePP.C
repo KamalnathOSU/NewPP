@@ -1,10 +1,10 @@
 
-#include "ExtremeQrulePP.h"
+#include "QuadratureRulePP.h"
 
-registerMooseObject("NewppApp", ExtremeQrulePP);
+registerMooseObject("NewppApp", QuadratureRulePP);
 
 InputParameters
-ExtremeQrulePP::validParams()
+QuadratureRulePP::validParams()
 {
   InputParameters params = ElementPostprocessor::validParams();
   MooseEnum extremum_type("min max","max");
@@ -16,14 +16,14 @@ ExtremeQrulePP::validParams()
   return params;
 }
 
-ExtremeQrulePP::ExtremeQrulePP(const InputParameters & params)
+QuadratureRulePP::QuadratureRulePP(const InputParameters & params)
   : ElementPostprocessor(params),
 	_type(getParam<MooseEnum>("value_type"))
 {
 }
 
 void
-ExtremeQrulePP::initialize()
+QuadratureRulePP::initialize()
 {
 	if(_type == "max")
 		_extreme_value = 0;
@@ -34,7 +34,7 @@ ExtremeQrulePP::initialize()
 }
 
 void
-ExtremeQrulePP::execute()
+QuadratureRulePP::execute()
 {
 	if( _type == "max" )
 	{
@@ -49,7 +49,7 @@ ExtremeQrulePP::execute()
 }
 
 void
-ExtremeQrulePP::finalize()
+QuadratureRulePP::finalize()
 {
 	if( _type == "max" )
 		gatherMax(_extreme_value);
@@ -58,9 +58,9 @@ ExtremeQrulePP::finalize()
 }
 
 void
-ExtremeQrulePP::threadJoin(const UserObject & y)
+QuadratureRulePP::threadJoin(const UserObject & y)
 {
-	const ExtremeQrulePP & pps = static_cast<const ExtremeQrulePP &>(y);
+	const QuadratureRulePP & pps = static_cast<const QuadratureRulePP &>(y);
 	if( _type == "max" && _extreme_value < pps._extreme_value)
 			_extreme_value = pps._extreme_value;
 	if( _type == "min" && _extreme_value > pps._extreme_value)
@@ -68,7 +68,7 @@ ExtremeQrulePP::threadJoin(const UserObject & y)
 }
 
 Real
-ExtremeQrulePP::getValue()
+QuadratureRulePP::getValue()
 {
   return _extreme_value;
 }

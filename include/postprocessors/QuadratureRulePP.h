@@ -3,12 +3,12 @@
 #include "ElementPostprocessor.h"
 #include "libmesh/quadrature.h"
 
-class ExtremeQrulePP : public ElementPostprocessor
+class QuadratureRulePP : public ElementPostprocessor
 {
 public:
   static InputParameters validParams();
 
-  ExtremeQrulePP(const InputParameters & parameters);
+  QuadratureRulePP(const InputParameters & parameters);
 
   virtual void initialize() override;
   virtual void execute() override;
