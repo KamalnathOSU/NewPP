@@ -1,0 +1,10 @@
+[Tests]
+  design = 'ExtremeQrulePP.md'
+  issues = ''
+  [mixed_elem]
+		  type = 'Exodiff'
+		  input = 'mixed_elem_mesh.i'
+		  exodiff = 'mixed_elem_mesh_out.e'
+		  requirement = 'The postprocessor shall calculated the minimum and maximum quadrature rule in the input mesh'
+  []
+[]
