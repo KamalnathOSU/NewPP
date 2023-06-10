@@ -1,0 +1,16 @@
+[Tests]
+  design = 'ExtremeQrulePP.md'
+  issues = ''
+  [QUAD9_FIRST]
+    type = 'Exodiff'
+    input = 'qrule_QUAD9.i'
+    exodiff = 'qrule_QUAD9_out.e'
+    requirement = 'The postprocessor shall calculate the Quadrature rule.'
+  []
+  [QUAD9_SECOND]
+    type = 'Exodiff'
+    input = 'qrule_QUAD9_SECOND.i'
+    exodiff = 'qrule_QUAD9_SECOND_out.e'
+    requirement = 'The postprocessor shall calculate the Quadrature rule.'
+  []
+[]
